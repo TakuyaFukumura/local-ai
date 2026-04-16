@@ -7,10 +7,10 @@ Docker を使って [Ollama](https://ollama.com/) と [Open WebUI](https://githu
 
 ## 構成
 
-| サービス | 説明 | URL |
-|---|---|---|
-| Ollama | LLM 実行エンジン | http://localhost:11434 |
-| Open WebUI | チャット UI | http://localhost:3000 |
+| サービス       | 説明         | URL                    |
+|------------|------------|------------------------|
+| Ollama     | LLM 実行エンジン | http://localhost:11434 |
+| Open WebUI | チャット UI    | http://localhost:3000  |
 
 ---
 
