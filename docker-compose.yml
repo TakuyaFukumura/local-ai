@@ -7,6 +7,25 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  ollama-model-init:
+    image: ollama/ollama:latest
+    container_name: ollama-model-init
+    entrypoint: ["ollama", "pull", "gemma4:e2b"]
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      ollama:
+        condition: service_healthy
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: "no"
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -17,7 +36,8 @@ services:
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
     depends_on:
-      - ollama
+      ollama:
+        condition: service_healthy
     volumes:
       - open-webui_data:/app/backend/data
 
