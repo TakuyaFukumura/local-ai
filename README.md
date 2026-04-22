@@ -26,7 +26,7 @@ Docker を使って [Ollama](https://ollama.com/) と [Open WebUI](https://githu
 docker compose up -d
 ```
 
-起動すると `ollama-model-init` コンテナが自動で `gemma4:e2b` モデルを取得します（初回は数分かかります）。
+起動すると `ollama-model-init` コンテナが自動で `qwen3.5:0.8b` モデルを取得します（初回は数分かかります）。
 
 ---
 
@@ -34,7 +34,7 @@ docker compose up -d
 
 1. ブラウザで http://localhost:3000 を開く
 2. 初回アクセス時にアカウントを作成してログイン
-3. 画面上部のモデル選択から `gemma4:e2b` を選択してチャット開始
+3. 画面上部のモデル選択から `qwen3.5:0.8b` を選択してチャット開始
 
 ---
 
@@ -59,5 +59,5 @@ docker compose down -v
 docker exec -it ollama ollama list
 
 # モデルの削除
-docker exec -it ollama ollama rm gemma4:e2b
+docker exec -it ollama ollama rm qwen3.5:0.8b
 ```
