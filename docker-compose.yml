@@ -8,7 +8,7 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     healthcheck:
-      test: ["CMD", "ollama", "list"]
+      test: [ "CMD", "ollama", "list" ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -17,7 +17,7 @@ services:
   ollama-model-init:
     image: ollama/ollama:latest
     container_name: ollama-model-init
-    entrypoint: ["ollama", "pull", "gemma4:e2b"]
+    entrypoint: [ "ollama", "pull", "gemma4:e2b" ]
     environment:
       - OLLAMA_HOST=http://ollama:11434
     depends_on:
