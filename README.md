@@ -38,6 +38,49 @@ docker compose up -d
 
 ---
 
+## Ollama と直接やり取りする方法
+
+Open WebUI を使わなくても、Ollama が公開している HTTP API に直接リクエストを送って利用できます。  
+この構成では Ollama が `http://localhost:11434` で待ち受けています。
+
+### PowerShell から API を呼び出す
+
+モデル一覧を確認する例:
+
+```powershell
+Invoke-RestMethod -Method Get -Uri "http://localhost:11434/api/tags"
+```
+
+モデルにプロンプトを送る例:
+
+```powershell
+$body = @{
+  model = "qwen3.5:0.8b"
+  prompt = "こんにちは。簡単に自己紹介してください。"
+  stream = $false
+} | ConvertTo-Json
+
+Invoke-RestMethod -Method Post -Uri "http://localhost:11434/api/generate" -ContentType "application/json" -Body $body
+```
+
+`curl` を使う場合は、PowerShell では `curl` エイリアスの影響を避けるため `curl.exe` を使うと確実です。
+
+```powershell
+curl.exe http://localhost:11434/api/generate -d "{\"model\":\"qwen3.5:0.8b\",\"prompt\":\"こんにちは\",\"stream\":false}"
+```
+
+### コンテナ内で Ollama コマンドを直接実行する
+
+```powershell
+# 対話実行
+docker exec -it ollama ollama run qwen3.5:0.8b
+
+# モデル一覧
+docker exec -it ollama ollama list
+```
+
+---
+
 ## 停止方法
 
 ```bash
@@ -57,6 +100,9 @@ docker compose down -v
 ```bash
 # 取得済みモデルの一覧表示
 docker exec -it ollama ollama list
+
+# モデルを直接実行
+docker exec -it ollama ollama run qwen3.5:0.8b
 
 # モデルの削除
 docker exec -it ollama ollama rm qwen3.5:0.8b
